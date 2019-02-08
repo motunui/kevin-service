@@ -4,19 +4,13 @@
 var Travel = require('./index.js');
 
 var getTravelData = function() {
-  var randomId = Math.round(Math.random() * 100);
+  var randomId = Math.floor(Math.random() * 100);
   console.log('getTravelData is invoked');
   return Travel.getAsync(`SELECT * FROM events WHERE id=${randomId}`)
     .then((rows) => {
       console.log("Promise resolved");
       console.log(rows);
-
-      // if (err) {
-      //   console.error("error is:" + err);
-      // } else {
-      //   console.log('rows are:' + rows);
-      //   return rows;
-      // }
+      return rows;
     })
     .catch((err) => console.error(err));
 };

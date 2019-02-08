@@ -1,23 +1,21 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 var { getTravelData } = require('../database/Travel.js');
 
 var app = express();
-var PORT = 3001;
+var PORT = 3004;
 
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../client/dist'));
 
 app.get('/api/events', (req, res) => {
-  res.send("Route Connected");
-  
   getTravelData()
   .then((data) => {
-    // console.log(data);
-  });
-
-  // .then((data) => res.send(data))
-  // .catch((err) => console.error(err));
+    res.send(data);
+  })
+  .catch((err) => console.error(err));
 });
 
 // app.get('/api/events/:id', (req, res) => {
