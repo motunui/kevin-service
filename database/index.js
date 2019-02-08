@@ -1,4 +1,5 @@
-var sqlite3 = require('sqlite3').verbose();
+var Promise = require('bluebird');
+var sqlite3 = Promise.promisifyAll(require('sqlite3').verbose());
 var faker = require('faker');
 var path = require('path');
 
@@ -10,6 +11,8 @@ var db = new sqlite3.Database(dbPath, (err) => {
 });
 
 db.serialize(function() {
+        db.run(`DROP TABLE events`);
+
         db.run(`CREATE TABLE events(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
@@ -36,19 +39,16 @@ db.serialize(function() {
         }
         stmt.finalize();
 
-        db.each(`SELECT id, name, price FROM events`, function(err, row) {
-                if (err) throw err;
-                console.log(`${row.id}: ${row.name} is ${row.price}`);
-        })
-
-        // db.run(`SELECT * FROM events`, function(err, rows) {
-        //         console.log(`${rows.id}: ${rows.name} has cost $${rows.price}`);
+        // db.each(`SELECT id, name, price FROM events LIMIT 10`, function(err, row) {
+        //         if (err) throw err;
+        //         console.log(`${row.id}: ${row.name} is ${row.price}`);
         // });
+
 });
 
-db.close((err) => {
-        if (err) console.error(err);
-        console.log("Close the database connection");
-});
+// db.close((err) => {
+//         if (err) console.error(err);
+//         console.log("Close the database connection");
+// });
 
 module.exports = db;
