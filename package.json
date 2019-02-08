@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "nodemon server/index.js",
-    "react-dev": "webpack -d --watch"
+    "react-dev": "webpack -d --watch",
+    "db-setup": "node database/index.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
