@@ -14,8 +14,4 @@ var travelData = function() {
   });
 }
 
-var a = 'random change for pull request review';
-// Adding a comment as change for review1 branch.
-
-
 module.exports.travelData = travelData;
